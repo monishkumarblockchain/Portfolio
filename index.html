@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Web Developer & Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* -- Global -- */
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* -- Default/Light Mode -- */
+            --bg-color-primary: #f1f1f1;
+            --bg-color-secondary: rgba(235, 235, 235, 0.5);
+            --text-primary: #111;
+            --text-secondary: #333;
+            --color-white: #f2f2f2;
+            --cta-primary: #0ab635;
+            --box-color: #e4e4e4;
+            --highlight: #47b147;
+            --box-shadow: 2px 2px 2px rgba(105, 105, 105, 0.3), 2px 2px 2px rgba(105, 105, 105, 0.3);
+        }
+
+        /* -- Dark Mode -- */
+        [data-theme-color="dark"] {
+            --bg-color-primary: #010116;
+            --bg-color-secondary: #0a0a1f;
+            --text-primary: #001;
+            --color-white: #f6f6f6;
+            --text-secondary: #f6f6f6;
+            --cta-primary: #00d46a;
+            --box-color: #0a0a1a;
+            --highlight: #0c9;
+            --box-shadow: 2px 2px 2px rgba(66, 66, 66, 0.3), 2px 2px 2px rgba(66, 66, 66, 0.3);
+        }
+
+        /* Theme switch */
+        .theme-icons>img {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #toggle-switch {
+            display: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--scroll-padding, 50px);
+        }
+
+        a:not(.readmore) {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        sup {
+            color: var(--highlight);
+            font-size: 0.55rem;
+        }
+
+        .fa-long-arrow-alt-right,
+        .fa-chevron-right {
+            padding-left: 10px;
+        }
+
+        .fa-long-arrow-alt-right:hover,
+        .fa-chevron-right:hover {
+            padding-left: 12px;
+        }
+
+        .scrollup {
+            background-color: var(--cta-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--color-white);
+            font-size: 1.8rem;
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 32px;
+            width: 50px;
+            height: 50px;
+            transition: all 0.5s ease;
+        }
+
+        .scrollup:before {
+            content: "";
+            position: absolute;
+            background-color: var(--highlight);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            z-index: 1;
+            transform: translate(-50%, -50%) scale(0.6);
+            animation: scale 1.2s ease-out infinite 1s;
+        }
+
+        @keyframes scale {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .scrollup:hover {
+            background-color: var(--highlight);
+        }
+
+        .scrollup:hover i {
+            transform: translateY(-5px);
+        }
+
+        .display {
+            bottom: 25px;
+        }
+
+        .stop-scroll {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+            width: 33.6px;
+            height: 25px;
+        }
+
+        .hamburger-menu .bar {
+            background-color: var(--text-secondary);
+            border-radius: 3px;
+            transition: 0.5s;
+            width: 2.1rem;
+            height: 3px;
+            margin-top: 10px;
+        }
+
+        .bar:before,
+        .bar:after {
+            content: "";
+            position: absolute;
+            width: 2.1rem;
+            height: 3px;
+            border-radius: 3px;
+            background-color: var(--text-secondary);
+            transition: 0.5s;
+        }
+
+        .bar:before {
+            transform: translateY(-9px);
+        }
+
+        .bar:after {
+            transform: translateY(9px);
+        }
+
+        /* -- Animate on scroll-- */
+        .hidden {
+            opacity: 0;
+            transition: all 1s ease-in-out;
+            filter: blur(5px);
+            transform: translateX(-100%);
+        }
+
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(0);
+        }
+
+        @media (prefers-reduced-motion) {
+            .hidden {
+                transition: none;
+            }
+        }
+
+        .project-box:nth-child(2) {
+            transition-delay: 350ms;
+        }
+
+        .project-box:nth-child(3) {
+            transition-delay: 500ms;
+        }
+
+        body {
+            background-color: var(--bg-color-secondary);
+            color: var(--text-primary);
+            font-family: "Jost", sans-serif;
+            font-size: 1rem;
+            line-height: 1.2;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* -- Header -- */
+        header {
+            position: fixed;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            z-index: 99;
+        }
+
+        nav {
+            background-color: var(--bg-color-primary);
+            box-shadow: var(--box-shadow);
+            font-family: "Jost", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 80px;
+            width: 100%;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--cta-primary);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        nav ul li {
+            list-style: none;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            margin: 0 20px;
+        }
+
+        nav a {
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease-in;
+        }
+
+        nav a:hover {
+            color: var(--cta-primary);
+        }
+
+        .resume-btn,
+        .back-btn {
+            background-color: var(--bg-color-primary);
+            border: 1px solid var(--highlight);
+            border-radius: 10px;
+            color: var(--cta-primary);
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: all 0.3s ease-in;
+        }
+
+        .resume-btn:hover,
+        .back-btn:hover {
+            border: none;
+            background-color: var(--cta-primary);
+            color: var(--color-white);
+        }
+
+        #resume {
+            color: inherit;
+        }
+
+        /* Theme Switch */
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .theme-switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .theme-icons {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .theme-icons i {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* -- Main -- */
+        main {
+            background-color: var(--bg-color-secondary);
+            background-size: 55px 55px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 220px 80px 100px;
+            min-height: 100vh;
+            gap: 40px;
+            flex-direction: row-reverse;
+        }
+
+        .left {
+            color: var(--text-secondary);
+            max-width: 600px;
+            flex: 1;
+        }
+
+        .right {
+            flex: 0 0 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(10, 182, 53, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: translateY(-10px);
+        }
+
+        .hero-image::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--highlight);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .left span {
+            color: var(--text-secondary);
+            font-family: "Roboto Mono", monospace;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .left h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .left p {
+            font-family: "Roboto Mono", monospace;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            width: 60%;
+        }
+
+        .left a {
+            color: var(--cta-primary);
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .left a:hover {
+            color: var(--highlight);
+        }
+
+        .left a:hover i {
+            padding-left: 5px;
+        }
+
+        /* -- About Me -- */
+        .about {
+            padding: 60px 80px;
+        }
+
+        .about-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .photo {
+            width: 260px;
+        }
+
+        .photo img {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .photo-wrapper {
+            position: relative;
+        }
+
+        .photo-wrapper::after {
+            position: absolute;
+            border: 4px solid var(--highlight);
+            content: "";
+            transform: translate(-94%, 4%);
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .background {
+            padding-left: 100px;
+        }
+
+        .background h2,
+        .background h4 {
+            color: var(--text-secondary);
+        }
+
+        .background p {
+            position: relative;
+            animation: slide-up 3s ease-in 1s forwards;
+        }
+
+        @keyframes slide-up {
+            from {
+                bottom: -80px;
+            }
+
+            to {
+                bottom: 0px;
+            }
+        }
+
+        .title {
+            font-family: "Roboto Mono", monospace;
+            font-size: 1.6rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+        }
+
+        .about p {
+            color: var(--text-secondary);
+            font-family: "Roboto Mono", monospace;
+            line-height: 1.3;
+            margin: 10px 0;
+        }
+
+        .technologies {
+            position: relative;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0 0px;
+        }
+
+        .tools {
+            font-family: "Roboto Mono", monospace;
+            display: grid;
+            justify-content: center;
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .tools ul {
+            list-style: none;
+            padding-top: 10px;
+        }
+
+        .tools ul li {
+            padding: 3px 40px 3px 0;
+            margin-top: 2px;
+        }
+
+        .tools ul li:before {
+            content: "▹ ";
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        /* -- Projects -- */
+        .project {
+            background-color: var(--bg-color-primary);
+            color: var(--text-secondary);
+            position: relative;
+            padding: 60px 0;
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .project-container {
+            margin-bottom: 20px;
+            padding: 0 80px;
+        }
+
+        .content-text {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .content-text h2 {
+            font-family: "Roboto Mono", monospace;
+            font-size: 1.8rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-secondary);
+        }
+
+        .content-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(250px, auto);
+            grid-gap: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        /* Project Cards */
+        .card {
+            padding: 1rem;
+            background: var(--bg-color-secondary);
+            color: #ffffff;
+            border-radius: 5px;
+            transition: 0.4s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease-in-out;
+            z-index: 1;
+        }
+
+        .card a {
+            color: #ffffff;
+            transition: 0.25s ease-in-out;
+            font-size: 1.1rem;
+            margin-right: 0.3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card a:hover {
+            color: var(--cta-primary);
+        }
+
+        .card:hover {
+            box-shadow: inset 0 100px 1000px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .card:hover::before {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .card:hover .project-info {
+            opacity: 1;
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: space-between;
+            opacity: 1;
+            position: relative;
+            transition: 0.5s ease-in-out;
+            z-index: 2;
+        }
+
+        .project-bio {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            top: 160px;
+            left: 10px;
+        }
+
+        .card .project-bio p {
+            font-size: 0.83rem;
+            font-family: "Roboto Mono", monospace;
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        .card .project-bio h3 {
+            font-size: 0.9rem;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .project-link {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            top: 160px;
+        }
+
+        /* Project Images */
+        .card:nth-child(1) {
+            background-image: url('images/Weather-Prediction.jpg');
+        }
+
+        .card:nth-child(2) {
+            background-image: url('images/igris-Online-compiler.jpg');
+        }
+
+        .card:nth-child(3) {
+            background-image: url('images/charity-website.jpg');
+        }
+
+        .btn {
+            align-self: center;
+            margin: 2rem 0;
+            background-color: var(--cta-primary);
+            border: none;
+            border-radius: 5px;
+            color: var(--color-white);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 12px 24px;
+            transition: all 0.3s ease-in;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--highlight);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--highlight);
+            color: var(--cta-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--cta-primary);
+            color: var(--color-white);
+        }
+
+        /* -- Blog -- */
+        .blog {
+            background: var(--bg-color-primary);
+            padding: 35px 0 35px;
+            overflow-x: hidden;
+        }
+
+        .blog-container {
+            text-align: center;
+        }
+
+        .blog .text,
+        .blog .subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .blog .subtitle {
+            padding: 0 30px;
+        }
+
+        .article-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            grid-gap: 20px;
+            padding: 5px 80px 40px;
+            text-align: left;
+        }
+
+        .thumbnail {
+            display: block;
+            position: relative;
+            object-fit: cover;
+            min-height: 80px;
+            height: 250px;
+            width: 100%;
+        }
+
+        .article {
+            box-shadow: -1px 1px 3px -1px rgba(0, 0, 0, 0.75);
+            background-color: var(--color-white);
+            max-width: 380px;
+            width: 100%;
+            margin: 6px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .article-preview {
+            margin-top: 10px;
+            padding: 15px;
+        }
+
+        .article-title {
+            color: var(--text-primary);
+            font-family: "Roboto Mono", monospace;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .article-intro {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .readmore {
+            color: var(--cta-primary);
+            font-size: 0.8rem;
+            text-decoration: none !important;
+            font-weight: bold;
+        }
+
+        .readmore:hover {
+            color: var(--highlight);
+        }
+
+        /* -- Contact -- */
+        .contact {
+            align-items: center;
+            margin: 60px 80px;
+        }
+
+        .form-text {
+            color: var(--text-secondary);
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .form-text p {
+            font-family: "Roboto Mono", monospace;
+            line-height: 1.5;
+            padding: 5px 0 15px;
+        }
+
+        #contact-form {
+            border: 0.5px solid var(--text-secondary);
+            border-radius: 5px;
+            padding: 20px 15px;
+            margin: 0 auto 50px;
+            max-width: 600px;
+        }
+
+        label {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            font-family: "Roboto Mono", monospace;
+        }
+
+        input,
+        textarea {
+            border: none;
+            outline: none;
+            border: 0.5px solid var(--text-secondary);
+            border-radius: 5px;
+            background-color: var(--box-color);
+            color: var(--text-secondary);
+            font-size: 1rem;
+            padding: 10px 15px;
+            margin: 10px 0 25px;
+            width: 100%;
+            transition: all 0.3s ease-in-out;
+            font-family: "Jost", sans-serif;
+        }
+
+        input {
+            border-bottom: 2px solid var(--text-secondary);
+        }
+
+        textarea {
+            resize: none;
+            min-height: 100px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border: 2px solid var(--highlight);
+        }
+
+        .contact-btn {
+            background-color: var(--cta-primary);
+            border: none;
+            border-radius: 5px;
+            color: var(--color-white);
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            padding: 12px 0;
+            width: 100%;
+        }
+
+        .contact-btn:hover {
+            background-color: var(--highlight);
+        }
+
+        /* -- Footer -- */
+        footer {
+            background-color: var(--box-color);
+            color: var(--text-secondary);
+            font-family: "Roboto Mono", monospace;
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        .footer-socials {
+            margin: 25px 0;
+        }
+
+        .footer-socials i {
+            padding: 5px;
+            color: var(--text-secondary);
+        }
+
+        .footer-socials i {
+            font-size: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .footer-socials i:hover {
+            border: 1.5px solid var(--highlight);
+            border-radius: 5px;
+            padding: 3px;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+        }
+
+        /* -- Media Queries-- */
+        @media (max-width: 908px) {
+            nav {
+                padding: 0 50px !important;
+            }
+
+            .about {
+                padding: 0 50px !important;
+            }
+
+            .about-container {
+                flex-direction: column;
+                margin-top: 0px;
+            }
+
+            main {
+                min-height: auto !important;
+            }
+
+            .left {
+                margin-bottom: 150px !important;
+            }
+
+            .hero {
+                padding: 220px 50px 0px !important;
+            }
+
+            .background {
+                padding-left: 0px !important;
+                margin-top: 50px !important;
+            }
+
+            .project-container {
+                margin-bottom: 30px !important;
+                padding: 0 25px !important;
+            }
+
+            .project-text {
+                top: 12px !important;
+            }
+
+            .tools {
+                display: grid;
+                justify-content: center;
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+
+            .article-wrapper {
+                padding: 5px 45px 30px !important;
+                grid-gap: 1rem !important;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                padding: 0 0 40px;
+            }
+
+            nav .nav-links {
+                background-color: var(--bg-color-primary);
+                display: flex;
+                flex-direction: column;
+                justify-content: center !important;
+                align-items: center;
+                position: fixed;
+                right: -100vw;
+                top: 70.2px;
+                height: 100vh;
+                width: 100vw;
+                transition: all 0.5s ease-in-out;
+            }
+
+            .nav-links li {
+                padding: 20px 0px;
+            }
+
+            .nav-links.active {
+                right: 0px;
+                opacity: 0.95;
+            }
+
+            .hamburger-menu.active .bar {
+                background-color: transparent;
+                transform: rotate(360deg);
+            }
+
+            .hamburger-menu.active .bar:before {
+                transform: translateY(0) rotate(45deg);
+            }
+
+            .hamburger-menu.active .bar:after {
+                transform: translateY(0) rotate(-45deg);
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 140px 40px 70px !important;
+                flex-direction: column !important;
+            }
+
+            .left {
+                margin-bottom: 50px !important;
+                margin-top: 80px !important;
+            }
+
+            .right {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .hero-image {
+                max-width: 280px;
+            }
+
+            .hero-image img {
+                height: 280px;
+            }
+
+            .left h1 {
+                font-size: 3rem !important;
+            }
+
+            .left p {
+                width: 100% !important;
+            }
+
+            .about {
+                padding: 0 80px;
+            }
+
+            .about-container {
+                flex-direction: column;
+                margin-top: 0px;
+            }
+
+            .photo {
+                width: 240px !important;
+            }
+
+            .background {
+                padding-left: 0px !important;
+                padding-top: 20px !important;
+            }
+
+            .tools {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 2px;
+            }
+
+            .tools ul li {
+                padding: 0px !important;
+                margin-top: 5px !important;
+                font-size: 0.9rem;
+            }
+
+            .filter-btn {
+                padding: 5px 8px !important;
+                margin: 0 5px !important;
+            }
+
+            .projects {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .project-bio {
+                top: 120px !important;
+            }
+
+            .project-link {
+                top: 120px !important;
+            }
+
+            .article-wrapper {
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 5px 30px 30px !important;
+                font-size: 0.8rem !important;
+            }
+
+            .article {
+                margin: 0 auto !important;
+                max-width: 480px !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 0 30px !important;
+            }
+
+            .hero {
+                padding: 140px 30px 80px !important;
+            }
+
+            .left {
+                margin-top: 60px !important;
+            }
+
+            .left span {
+                font-size: 1rem !important;
+            }
+
+            .left h1 {
+                font-size: 2.8rem !important;
+            }
+
+            .about {
+                padding: 0 30px !important;
+                width: 100% !important;
+            }
+
+            .about p {
+                font-size: 0.8rem;
+                width: 100% !important;
+            }
+
+            .photo {
+                width: 200px !important;
+            }
+
+            .projects {
+                grid-template-columns: repeat(1, 1fr) !important;
+            }
+
+            .card .project-bio h3 {
+                font-size: 0.85rem !important;
+            }
+
+            .card .project-bio p {
+                font-size: 0.75rem !important;
+            }
+
+            .contact {
+                margin: 40px 30px !important;
+            }
+
+            #contact-form {
+                margin: 0 auto 30px !important;
+            }
+
+            label {
+                font-size: 1rem !important;
+            }
+
+            input,
+            textarea {
+                padding: 8px 10px !important;
+                margin: 10px 0 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Portfolio</div>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="toggle-switch">
+                        <div class="theme-icons">
+                            <i class="fas fa-sun brighten hide"></i>
+                            <i class="fas fa-moon darken"></i>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main id="home">
+        <section class="hero">
+            <div class="left">
+                <span>Hi, my name is Monish Kumar</span>
+                <h1>Python Developer</h1>
+                <h1>I build things for the web.</h1>
+                <p>
+                     I'm Monish Kumar, a dedicated full-stack developer with a strong passion for coding, design, and problem-solving.
+    I enjoy crafting web applications that combine elegant user interfaces with powerful backend functionality.
+                </p>
+                <a href="#projects">View My Work <i class="fas fa-long-arrow-alt-right"></i></a>
+            </div>
+            <div class="right">
+                <div class="hero-image">
+                    <img src="C:\Users\monish kumar\Desktop\New folder (3)\images\MonishKumar1.jpg"
+                        alt="Profile Image">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="photo">
+                <div class="photo-wrapper">
+                    <img src="C:\Users\monish kumar\Desktop\New folder (3)\images\monishkumar2.jpg"
+                        alt="Profile Photo">
+                </div>
+            </div>
+            <div class="background">
+                <h2 class="title">About Me</h2>
+                <h4 class="subtitle">See Why You should Work With Me</h4>
+                <p>
+    I'm a passionate full-stack web developer and machine learning intern with experience in building responsive
+    and dynamic web applications using HTML, CSS, JavaScript, Django, and MongoDB.
+</p>
+<p>
+    I focus on creating clean, efficient, and maintainable code while ensuring good performance,
+    accessibility, and user-friendly design throughout the development process.
+</p>
+<p>
+    I'm constantly exploring new technologies like the MERN stack and contributing to open-source projects to
+    enhance my problem-solving and development skills.
+</p>
+
+
+                <div class="technologies">
+                    <h4>Technologies I work with:</h4>
+                    <div class="tools">
+                        <ul>
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>
+                        <ul>
+                            <li>React</li>
+                            <li>Vue.js</li>
+                            <li>Node.js</li>
+                        </ul>
+                        <ul>
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>DSA</li>
+                        </ul>
+                        <ul>
+                            <li>Git</li>
+                            <li>Figma</li>
+                            <li>Photoshop</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="project">
+        <div class="project-container">
+            <div class="content-text">
+                <h2>Projects</h2>
+                <p>Check out some of my personal and paid projects</p>
+            </div>
+
+            <article class="projects">
+                <!-- Weather Prediction App -->
+                <div class="card">
+                    <div class="project-info">
+                        <div class="project-bio">
+                            <h3>Weather Prediction App</h3>
+                            <p>HTML | CSS | JavaScript | Weather API</p>
+                        </div>
+                        <div class="project-link">
+                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ZCompiler Online Compiler -->
+                <div class="card">
+                    <div class="project-info">
+                        <div class="project-bio">
+                            <h3>ZCompiler Online Compiler</h3>
+                            <p>HTML | CSS | JavaScript</p>
+                        </div>
+                        <div class="project-link">
+                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charity Support Platform -->
+                <div class="card">
+                    <div class="project-info">
+                        <div class="project-bio">
+                            <h3>Charity Support Platform</h3>
+                            <p>Python | Django | MySQL | AWS</p>
+                        </div>
+                        <div class="project-link">
+                            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <a href="#" class="btn btn-secondary" target="_blank">See More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="blog-container">
+            <h2 class="text title">Blog</h2>
+            <p class="subtitle">Occasionally, I write on valuable topics, concepts and essential tips for developers and
+                designers.</p>
+
+            <div class="article-wrapper">
+                <article class="article">
+                    <img src="C:\Users\monish kumar\Desktop\New folder (3)\images\Leetcode.jpg"
+                        alt="Gamification Article" class="thumbnail">
+                    <div class="article-preview">
+                        <h3 class="article-title">Learning Through Gamification</h3>
+                        <p class="article-intro">
+                            Learning something new through interactive tutorials can be fun especially for gamers.Along with development, I regularly practice Data Structures and Algorithms on LeetCode to enhance my logical thinking and coding efficiency. Solving challenges helps me improve my approach to real-world problems and write optimized solutions.
+I’m always eager to learn, explore new technologies, and build applications that make a meaningful impact.
+                        </p>
+                        <a href="#" class="readmore">Continue Reading <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="article">
+                    <img src="C:\Users\monish kumar\Desktop\New folder (3)\images\GitHub.jpg"
+                        alt="Open Source Article" class="thumbnail">
+                    <div class="article-preview">
+                        <h3 class="article-title">Understanding Open Source Software</h3>
+                        <p class="article-intro">
+                            I actively use GitHub to share my projects, explore open-source code, and track my learning progress. It serves as my development space where I build and manage web applications, experiment with new technologies, and collaborate on creative coding ideas. Through GitHub, I continuously improve my version control skills and showcase my growth as a developer by maintaining clean, well-documented repositories that reflect my journey in full-stack development.
+                        </p>
+                        <a href="#" class="readmore">Continue Reading <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="article">
+                    <img src="C:\Users\monish kumar\Desktop\New folder (3)\images\Fullstack.jpg"
+                        alt="SEO Article" class="thumbnail">
+                    <div class="article-preview">
+                        <h3 class="article-title">SEO Best Practices for Developers</h3>
+                        <p class="article-intro">
+                            I’m a passionate Full-Stack Developer who loves building modern, responsive, and user-friendly web applications. My work spans both the frontend and backend, combining creativity with logic to craft seamless digital experiences. I specialize in HTML, CSS, JavaScript, Python, Django, and MongoDB, and enjoy turning ideas into functional, efficient, and visually appealing solutions. 
+                            I focus on clean code, scalability, and performance — constantly learning new frameworks and technologies to stay up to date in the fast-evolving tech world
+                        </p>
+                        <a href="#" class="readmore">Continue Reading <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="form-text">
+            <h2 class="title">Get In Touch</h2>
+            <p>Do you have a project and/or want to have a chat?<br>Feel free to send me a message, I will definitely
+                reply.</p>
+        </div>
+
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="contact-btn">SEND MESSAGE</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-codepen"></i></a>
+        </div>
+        <p class="copyright">&copy; 2026 Portfolio. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="scrollup">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mixitup@3.3.1/dist/mixitup.min.js"></script>
+    <script>
+        const hamburgerMenu = document.querySelector(".hamburger-menu");
+        const navMenu = document.querySelector(".nav-links");
+        const navItem = document.querySelectorAll(".nav-links li");
+        const scrollupBtn = document.querySelector(".scrollup");
+
+        // Show Hamburger Menu
+        hamburgerMenu.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+            hamburgerMenu.classList.toggle("active");
+            document.body.classList.toggle("stop-scroll");
+        });
+
+        // Close Hamburger Menu
+        navItem.forEach((link) => link.addEventListener("click", closeMenu));
+
+        function closeMenu() {
+            navMenu.classList.remove("active");
+            hamburgerMenu.classList.remove("active");
+            document.body.classList.remove("stop-scroll");
+        }
+
+        // Activate Scroll Button
+        window.addEventListener("scroll", () => {
+            if (window.scrollY >= window.innerHeight * 0.8 || window.pageYOffset > 300) {
+                scrollupBtn.classList.add("display");
+            } else {
+                scrollupBtn.classList.remove("display");
+            }
+        });
+
+        function scrollUp() {
+            let position = document.documentElement.scrollTop || document.body.scrollTop;
+            if (position > 0) {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        scrollupBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            scrollUp();
+        });
+
+        // Select Logo and Switch Elements
+        const lightSwitch = document.querySelector(".brighten");
+        const darkSwitch = document.querySelector(".darken");
+
+        // Dark Mode Theme Switch
+        const themeSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        themeSwitch.addEventListener("change", changeTheme, false);
+
+        // Save selected mode
+        function changeTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute("data-theme-color", "dark");
+                lightSwitch.classList.remove("hide");
+                darkSwitch.classList.add("hide");
+            } else {
+                document.documentElement.setAttribute("data-theme-color", "light");
+                lightSwitch.classList.add("hide");
+                darkSwitch.classList.remove("hide");
+            }
+        }
+
+        // Animate on scroll
+        const observer = new IntersectionObserver((items) => {
+            items.forEach((item) => {
+                if (item.isIntersecting) {
+                    item.target.classList.add("show");
+                } else {
+                    item.target.classList.remove("show");
+                }
+            });
+        });
+
+        const hiddenElems = document.querySelectorAll(".hidden");
+        hiddenElems.forEach((entry) => observer.observe(entry));
+
+        // Contact Form Submission
+        document.getElementById("contact-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Thank you for your message! I will get back to you soon.");
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>
